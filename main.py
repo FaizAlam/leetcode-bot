@@ -25,7 +25,7 @@ def run_cron_for_streak_mails():
 # Schedule the cron job to run every day at 9:30 AM
 scheduler.add_job(
     func=run_cron_for_streak_mails,
-    trigger=CronTrigger(hour=21, minute=40),
+    trigger=CronTrigger(hour=11, minute=59),
 )
 scheduler.start()
 
