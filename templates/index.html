@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remind Code</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+    <!-- <script src="{{ url_for('static', filename='js/scripts.js') }}"></script> -->
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <h1>Welcome to RemindCode</h1>
+            <p>Welcome to RemindCode, your personal coding companion! Never miss a day of coding practice with our convenient reminders tailored to your schedule. Stay motivated, track your progress, and achieve your coding goals effortlessly. Start building your coding streak today. Subscribe to our daily reminder bot!</p>
+            <div class="copyright">
+                &copy; 2024
+            </div>
+        </div>
+        <div class="right">
+            <div class="form-container">
+                <form id="subscribe">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Enter Your Name" name="name">
+                <label for="email">Email Id</label>
+                <input type="email" id="email" placeholder="Enter Your Email Id" name="email">
+                <label for="username">LeetCode Username</label>
+                <input type="text" id="username" placeholder="Enter Your LeetCode Username" name="username">
+                <div class="button-container"><button type="submit">Subscribe</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>
