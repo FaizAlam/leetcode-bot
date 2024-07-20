@@ -1,5 +1,5 @@
 from mail_handler import EmailSender
-from mail_template import create_email
+from mail_template import create_email, subscription_mail
 from make_request import MakeRequest
 from constants import LEETCODE_API_PAYLOAD_v2, LEETCODE_PROFILE_API
 from datetime import datetime, timedelta
@@ -23,10 +23,11 @@ class ProcessData:
 
 
 class ReminderUtilClass:
-    def __init__(self, submissions, profile_name, email) -> None:
+    def __init__(self, submissions, lc_user, profile_name, email) -> None:
         self.submissions = submissions
         self.profile_name = profile_name
         self.email = email
+        self.lc_user = lc_user
         # self.latest_sub_time = self.latest_submission.get('timestamp')
         # print(self.submissions)
         self.current_time = datetime.now()
@@ -53,8 +54,8 @@ class ReminderUtilClass:
         if self.streak>-1:
             # send email to maintain streak
             pass
-            sender = EmailSender("mailtrap@demomailtrap.com", self.email)
-            html = create_email(self.profile_name, self.streak, 'ajinkya1p3')
+            sender = EmailSender(self.email)
+            html = create_email(self.profile_name, self.streak, self.lc_user)
             message = sender.create_message("🔥 Don't Break Your Streak! Keep Shining on LeetCode 💪", html)
             sender.send_email(message)
             print("Email sent")
@@ -63,6 +64,16 @@ class ReminderUtilClass:
             # send email to start streak
             pass
     
+
+class SubscriptionUtils:
+    @staticmethod
+    def send_subs_mail(user_email):
+        sender = EmailSender(user_email)
+        html = subscription_mail()
+        message = sender.create_message("Welcome to RemindCode! 💐", html)
+        sender.send_email(message)
+        print(f"Welcome mail sent to {user_email}")
+
 '''
 2024-04-25 
 

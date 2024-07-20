@@ -5,11 +5,12 @@ LEETCODE_API_PAYLOAD = {"operationName":"getRecentSubmissionList","variables":{"
 LEETCODE_API_PAYLOAD_v2 = {"query":"\n    query recentAcSubmissions($username: String!, $limit: Int!) {\n  recentAcSubmissionList(username: $username, limit: $limit) {\n    id\n    title\n    titleSlug\n    timestamp\n  }\n}\n    ","variables":{"username":"faizalam","limit":40},"operationName":"recentAcSubmissions"}
 
 # mailtrap credentials
-MAIL_SMTP_SERVER = "live.smtp.mailtrap.io"
-MAIL_SMTP_PORT = 587
+# MAIL_SMTP_SERVER = "live.smtp.mailtrap.io"
+# MAIL_SMTP_PORT = 587
 
-MAIL_LOGIN="api"
-MAIL_PASSWORD="86ff5df32b2c9c4b10a1ccb29f48227c"
+# MAIL_LOGIN="api"
+# MAIL_PASSWORD="86ff5df32b2c9c4b10a1ccb29f48227c"
+SENDER_EMAIL="remindcode4@gmail.com"
 
 LEETCODE_PROFILE_API = {"query":"\n    query userPublicProfile($username: String!) {\n  matchedUser(username: $username) {\n    contestBadge {\n      name\n      expired\n      hoverText\n      icon\n    }\n    username\n    githubUrl\n    twitterUrl\n    linkedinUrl\n    profile {\n      ranking\n      userAvatar\n      realName\n      aboutMe\n      school\n      websites\n      countryName\n      company\n      jobTitle\n      skillTags\n      postViewCount\n      postViewCountDiff\n      reputation\n      reputationDiff\n      solutionCount\n      solutionCountDiff\n      categoryDiscussCount\n      categoryDiscussCountDiff\n    }\n  }\n}\n    ","variables":{"username":"FaizAlam"},"operationName":"userPublicProfile"}
 

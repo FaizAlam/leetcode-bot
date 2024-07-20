@@ -3,9 +3,6 @@ document.getElementById("subscribe").addEventListener("submit",function(event){
     var email = document.getElementById("email").value;
     var user_name = document.getElementById("name").value;
     var lc_user = document.getElementById("username").value;
-    console.log(email)
-    console.log(user_name)
-    console.log(lc_user)
 
     const data = {email,user_name,lc_user}
     fetch("/submit",{
@@ -17,12 +14,16 @@ document.getElementById("subscribe").addEventListener("submit",function(event){
     })
     .then(res=>res.json())
     .then(data=>{
-        console.log(data)
+        if (data?.status===400){
+            alert("YOU HAVE ALREADY SUBSCRIBED!")
+        }
+        else if(data?.status===200){
         alert("YOU HAVE BEEN SUBSCRIBED! WAIT FOR US IS IN YOUR INBOX!")
+        }
     })
     
     .catch((error)=>{
-        console.log(error)
+        alert("SOMETHING WENT WRONG! TRY AGAIN LATER")
     })
 
 

@@ -1,16 +1,14 @@
 from utils import ProcessData, ReminderUtilClass
-from mail_handler import EmailSender
-from mail_template import create_email
 from mysql import connector
 from mysql.connector import errorcode
 
 
 def connect_to_db():
     config = {
-    'user': 'root',
-    'password': '',
-    'host': '127.0.0.1',
-    'database': 'leetcode_notifier',
+    'user': 'sql12720934',
+    'password': 'LunjcLNweD',
+    'host': 'sql12.freemysqlhosting.net',
+    'database': 'sql12720934',
     'raise_on_warnings': True
     }
     try:
@@ -38,11 +36,7 @@ def main(lc_user, user_mail, profile_name):
     # diff = ReminderUtilClass(submissions).calculate_streak()
     # print(diff)
     # Usage
-    ReminderUtilClass(submissions, profile_name, user_mail).send_streak_reminder()
-    
-
-    
-
+    ReminderUtilClass(submissions,lc_user, profile_name, user_mail).send_streak_reminder()
 
 
     '''
@@ -57,14 +51,11 @@ def main(lc_user, user_mail, profile_name):
     get the submissions for the user
     calculate the streak
     if streak present, send email to mantain streak
-    else, send email to start streak
-
-    
+    else, send email to start streak 
     '''
 
 
-
-if __name__ == '__main__':
+def initialise_cron():
     # main()
     cnx = connect_to_db()
     if cnx is None:
@@ -76,7 +67,14 @@ if __name__ == '__main__':
     cursor.close()
     cnx.close()
     for user in users_data:
+        # second column of users table is lc_user
+        # third column of users table is profile_name
+        # fourth column of users table is email of user
         lc_user = user[1]
-        user_mail = user[2]
-        profile_name = user[3]
+        profile_name = user[2]
+        user_mail = user[3]
         main(lc_user, user_mail, profile_name)
+
+    # main('faizalam', 'mohdfaizalam53@gmail.com', 'FaizAlam')
+
+# initialise_cron()

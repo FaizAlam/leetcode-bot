@@ -1,16 +1,33 @@
 from flask import Flask, request, jsonify, render_template
 from flask_mysqldb import MySQL
 from database import mysql
+from backend_main import initialise_cron
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
+from utils import SubscriptionUtils
 
 
 app = Flask(__name__)
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'leetcode_notifier'
+app.config['MYSQL_HOST'] = 'sql12.freemysqlhosting.net'
+app.config['MYSQL_USER'] = 'sql12720934'
+app.config['MYSQL_PASSWORD'] = 'LunjcLNweD'
+app.config['MYSQL_DB'] = 'sql12720934'
 app.config['MYSQL_PORT'] = 3306
 
 mysql.init_app(app)
+scheduler = BackgroundScheduler()
+
+
+
+def run_cron_for_streak_mails():
+    initialise_cron()
+
+# Schedule the cron job to run every day at 9:30 AM
+scheduler.add_job(
+    func=run_cron_for_streak_mails,
+    trigger=CronTrigger(hour=21, minute=40),
+)
+scheduler.start()
 
 
 @app.route('/')
@@ -34,7 +51,6 @@ def validate_data(**kwargs):
 def submit_data():
     try:
         cur = mysql.connection.cursor()
-        print("data received", request.json)
         user_name = request.json['user_name']
         lc_user = request.json['lc_user']
         email = request.json['email']
@@ -51,6 +67,8 @@ def submit_data():
         cur.execute('''INSERT INTO `users` (`lc_user`, `email`, `user_name`) VALUES (%s, %s, %s);''',(lc_user, email, user_name))
         mysql.connection.commit()
         cur.close()
+        # send confirmation mail to user
+        SubscriptionUtils.send_subs_mail(email)
         return jsonify({'message': 'Data added successfully', 'status': 200})
 
     except Exception as e:
